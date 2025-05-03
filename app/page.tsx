@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./components/ui/card";
+import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { Sparkles, MessageSquare, Clock, FileText, LayoutPanelTop, Globe } from "lucide-react";
 import { FeatureCard } from "./components/FeatureCard";
