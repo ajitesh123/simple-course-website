@@ -1,5 +1,18 @@
 "use client";
 
+/**
+ * Course Client Component
+ * 
+ * CUSTOMIZATION GUIDE:
+ * This is the main course viewing page that displays lessons and interactive content.
+ * To customize this for your specific coaching type:
+ * 
+ * 1. Update the courseData object with your actual course content
+ * 2. Modify the CourseContent component to match your content style and needs
+ * 3. Adjust the styling to match your brand colors and design
+ * 4. Add additional functionality like progress tracking or certification if needed
+ */
+
 import { useState } from "react";
 import { Card, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
@@ -14,8 +27,26 @@ import { MediaEmbed } from "../components/MediaEmbed";
 import { cn } from "../lib/utils";
 import { CourseSidebar } from "../components/course/CourseSidebar";
 
+/**
+ * Media embed types for different content formats
+ * - loom: For Loom video embeds
+ * - youtube: For YouTube video embeds
+ * - iframe: For generic iframe embeds
+ * - toughtongue: For ToughTongue AI interactive voice agent embeds
+ * - placeholder: Default placeholder when no content is provided
+ */
 type MediaEmbedType = "loom" | "youtube" | "iframe" | "toughtongue" | "placeholder";
 
+/**
+ * Lesson interface
+ * Defines the structure of each lesson in the course
+ * 
+ * id: Unique identifier for the lesson
+ * title: Display title of the lesson
+ * duration: String representation of lesson duration (e.g., "5:00")
+ * videoUrl: URL for the lesson content (video or interactive content)
+ * mediaType: Type of media to embed
+ */
 interface Lesson {
   id: string;
   title: string;
@@ -24,12 +55,33 @@ interface Lesson {
   mediaType: MediaEmbedType;
 }
 
+/**
+ * Course interface
+ * Defines the structure of the course
+ * 
+ * title: Course title
+ * lessons: Array of Lesson objects
+ */
 interface Course {
   title: string;
   lessons: Lesson[];
 }
 
-// Sample course data
+/**
+ * Sample course data
+ * 
+ * CUSTOMIZE:
+ * - Replace with your actual course content
+ * - Update the title to match your course name
+ * - Add your lessons with appropriate content
+ * - For ToughTongue AI integration, create scenarios at https://app.toughtongueai.com/
+ *   and use the embed URL with mediaType: "toughtongue"
+ * 
+ * Examples for different coaching types:
+ * - Book Writing: Lessons on story structure, character development, dialogue, etc.
+ * - Apology Coach: Scenarios for different apology situations and techniques
+ * - Dating Coach: Conversation practice, profile creation, relationship advice
+ */
 const courseData: Course = {
   title: "Product Management Interview Preparation",
   lessons: [
@@ -64,7 +116,15 @@ const courseData: Course = {
   ]
 };
 
-// Course content component
+/**
+ * Course content component
+ * Displays the selected lesson content and navigation controls
+ * 
+ * CUSTOMIZE:
+ * - Modify the layout and styling to match your brand
+ * - Add additional content like downloadable resources or notes
+ * - Consider adding social sharing or progress indicators
+ */
 const CourseContent = ({
   lesson,
   onPrevious,
@@ -77,6 +137,7 @@ const CourseContent = ({
   return (
     <div className="flex-1 overflow-auto p-6">
       <div className="max-w-3xl mx-auto space-y-6">
+        {/* Lesson title and navigation */}
         <div className="flex items-center justify-between">
           <Button
             variant="ghost"
@@ -117,6 +178,7 @@ const CourseContent = ({
           </Button>
         </div>
 
+        {/* Media content - uses the MediaEmbed component */}
         <MediaEmbed
           type={lesson.mediaType}
           url={lesson.videoUrl}
@@ -124,6 +186,7 @@ const CourseContent = ({
           aspectRatio="16:9"
         />
 
+        {/* Lesson content - customize this with your actual content */}
         <div className="prose dark:prose-invert max-w-none">
           <p>
             Answers to any interview question has three distinct parts: beginning, middle, and end. Each
@@ -135,13 +198,19 @@ const CourseContent = ({
   );
 };
 
+/**
+ * Main CourseClient component
+ * Manages the course UI, lesson navigation, and sidebar
+ */
 export default function CourseClient() {
+  // State for tracking the active lesson - change the default if needed
   const [activeLesson, setActiveLesson] = useState(courseData.lessons[1].id);
   const currentLesson = courseData.lessons.find(l => l.id === activeLesson) || courseData.lessons[0];
   const [showSidebar, setShowSidebar] = useState(false);
 
   const currentIndex = courseData.lessons.findIndex(l => l.id === activeLesson);
 
+  // Navigation handlers
   const handlePrevious = () => {
     if (currentIndex > 0) {
       setActiveLesson(courseData.lessons[currentIndex - 1].id);
@@ -171,7 +240,7 @@ export default function CourseClient() {
         )}
       </Button>
 
-      {/* Sidebar */}
+      {/* Sidebar - shows course navigation */}
       <div className={cn(
         "absolute md:relative inset-0 z-40 md:z-auto",
         showSidebar ? "block" : "hidden md:block"
@@ -186,7 +255,7 @@ export default function CourseClient() {
         />
       </div>
 
-      {/* Content */}
+      {/* Content - displays the selected lesson */}
       <CourseContent
         lesson={currentLesson}
         onPrevious={handlePrevious}

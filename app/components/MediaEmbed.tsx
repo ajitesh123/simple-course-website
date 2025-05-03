@@ -1,11 +1,46 @@
 "use client";
 
+/**
+ * MediaEmbed Component
+ * 
+ * This component handles embedding different types of media content:
+ * - YouTube videos
+ * - Loom videos
+ * - ToughTongue AI interactive voice agents
+ * - Generic iframes
+ * - Placeholder for when no content is provided
+ * 
+ * CUSTOMIZATION GUIDE:
+ * 1. To add a new media type, extend the MediaEmbedType type and add a new case in renderEmbed
+ * 2. For ToughTongue AI integration, create your scenarios at https://app.toughtongueai.com/
+ *    and use the embed URL with mediaType: "toughtongue"
+ * 3. Adjust the styling and appearance to match your branding
+ */
+
 import { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import { PlayCircle } from "lucide-react";
 
+/**
+ * Supported media embed types
+ * - loom: For Loom video embeds
+ * - youtube: For YouTube video embeds 
+ * - iframe: For generic iframe embeds
+ * - toughtongue: For ToughTongue AI interactive voice agent embeds
+ * - placeholder: Default placeholder when no content is provided
+ */
 type MediaEmbedType = "loom" | "youtube" | "iframe" | "toughtongue" | "placeholder";
 
+/**
+ * MediaEmbed component props
+ * @property {MediaEmbedType} type - Type of media to embed
+ * @property {string} url - URL of the media to embed
+ * @property {string} title - Title of the media (for accessibility)
+ * @property {string} aspectRatio - Aspect ratio of the media (16:9, 4:3, or 1:1)
+ * @property {string} height - Custom height for the embed (especially for ToughTongue AI embeds)
+ * @property {string} allow - Permissions to grant the iframe (for custom iframes)
+ * @property {string} frameBorder - Border width for the iframe
+ */
 interface MediaEmbedProps {
   type?: MediaEmbedType;
   url?: string;
@@ -39,6 +74,7 @@ export function MediaEmbed({
     switch (type) {
       case "youtube":
         // Handle YouTube embed
+        // Extract video ID from different YouTube URL formats
         const youtubeId = url.includes("youtu.be") 
           ? url.split("/").pop() 
           : url.includes("?v=") 
@@ -57,6 +93,7 @@ export function MediaEmbed({
       
       case "loom":
         // Handle Loom embed
+        // Works with both full Loom share URLs and just the video ID
         return (
           <iframe
             src={url.includes("/share/") ? url : `https://www.loom.com/embed/${url}`}
@@ -69,6 +106,7 @@ export function MediaEmbed({
       
       case "toughtongue":
         // ToughTongueAI specific embed
+        // Requires microphone permissions for voice interaction
         return (
           <iframe
             src={url}
@@ -84,6 +122,7 @@ export function MediaEmbed({
       
       case "iframe":
         // Generic iframe embed
+        // For any other type of embeddable content
         return (
           <iframe
             src={url}
@@ -100,6 +139,7 @@ export function MediaEmbed({
       case "placeholder":
       default:
         // Placeholder for when no content is provided
+        // Customize this to match your branding
         return (
           <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-800">
             <PlayCircle className="h-16 w-16 text-gray-400" />
@@ -114,6 +154,7 @@ export function MediaEmbed({
     <Card className="w-full overflow-hidden">
       <CardContent className={`p-0 ${type === "toughtongue" ? "" : aspectRatioClass}`}>
         {renderEmbed()}
+        {/* Loading indicator - shown while the iframe is loading */}
         {isLoading && type !== "placeholder" && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>

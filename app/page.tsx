@@ -1,9 +1,30 @@
+/**
+ * Landing Page for Simple Course Website
+ * 
+ * CUSTOMIZATION GUIDE:
+ * This is the main landing page that visitors will see first. You should customize it 
+ * according to your specific coaching niche:
+ * 
+ * 1. Update the Header component with your course name and description
+ * 2. Modify the BenefitsGrid to highlight the value proposition of your coaching
+ * 3. Update CourseModules to reflect your actual course structure
+ * 4. Adjust CTAButtons text to match your call-to-action needs
+ * 5. Update the Footer links to point to your resources
+ */
+
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { Sparkles, MessageSquare, Clock, FileText, LayoutPanelTop, Globe } from "lucide-react";
 import { FeatureCard } from "./components/FeatureCard";
 
-// Header component
+/**
+ * Header Component
+ * 
+ * CUSTOMIZE: 
+ * - Replace [Course Name] with your actual course/coaching program name
+ * - Update the description to match your specific offering
+ * - Consider adding your brand/logo image above the title
+ */
 const Header = () => {
   return (
     <>
@@ -15,7 +36,19 @@ const Header = () => {
   );
 };
 
-// Course benefits grid component
+/**
+ * Course benefits grid component
+ * 
+ * CUSTOMIZE:
+ * - Update the benefits to reflect the specific value of your coaching program
+ * - Replace the icons with ones that better represent your benefits
+ * - Consider adding more or fewer benefits based on your needs
+ * 
+ * Examples for different coaching types:
+ * - Book Writing: "Structured Approach", "Publishing Guidance", "Feedback on Your Work"
+ * - Apology Coach: "Authenticity Training", "Relationship Repair", "Conflict Resolution"
+ * - Dating Coach: "Conversation Starters", "Building Confidence", "Understanding Body Language"
+ */
 const BenefitsGrid = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
@@ -38,7 +71,19 @@ const BenefitsGrid = () => {
   );
 };
 
-// Course modules component
+/**
+ * Course modules component
+ * 
+ * CUSTOMIZE:
+ * - Replace the module names and descriptions with your actual course content
+ * - Add or remove modules as needed
+ * - Consider adding icons or visual indicators of difficulty/progress
+ * 
+ * For different coaching types, structure your modules appropriately:
+ * - Book Writing: "Planning Your Story", "Character Development", "Dialogue Writing"
+ * - Apology Coach: "Understanding Your Mistake", "Crafting Sincere Apologies", "Making Amends"
+ * - Dating Coach: "Creating Your Profile", "First Date Conversations", "Building Relationships"
+ */
 const CourseModules = () => {
   return (
     <div className="w-full max-w-4xl">
@@ -67,7 +112,14 @@ const CourseModules = () => {
   );
 };
 
-// CTA buttons component
+/**
+ * CTA buttons component
+ * 
+ * CUSTOMIZE:
+ * - Update the button text to match your call-to-action needs
+ * - Adjust the button styling to match your brand colors
+ * - Consider adding a discount offer or limited-time promotion
+ */
 const CTAButtons = () => {
   return (
     <div className="flex gap-4 items-center flex-col sm:flex-row mt-6">
@@ -89,7 +141,14 @@ const CTAButtons = () => {
   );
 };
 
-// Footer component
+/**
+ * Footer component
+ * 
+ * CUSTOMIZE:
+ * - Update the links to point to your resources
+ * - Add or remove links as needed
+ * - Consider adding social media links or contact information
+ */
 const Footer = () => {
   return (
     <footer className="row-start-3 flex gap-4 mt-12 flex-wrap items-center justify-center">
